@@ -27,7 +27,7 @@ interface StakingContextType {
   networkName: string | null;
   ethBalance: string | null;
   causeBalance: string | null;
-  fetchBalances: () => Promise<void>;
+  fetchBalances: (provider: ethers.BrowserProvider, signer: ethers.Signer) => Promise<void>;
 }
 
 const StakingContext = createContext<StakingContextType | undefined>(undefined);
@@ -39,6 +39,29 @@ export const useStaking = () => {
   }
   return context;
 };
+
+const CAUSE_TOKEN_ADDRESS = "0x32e72f81Afa6882d9B00b899a5c25b9161254Fab"; // Replace with your actual CAUSE token contract address
+const CAUSE_TOKEN_ABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+];
 
 export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -73,7 +96,7 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
         ethereum = (window as any).ethereum;
       } else if (walletType === "trustwallet") {
         ethereum =
-          (window as any).trustwallet && (window as any).trustwallet.ethereum;
+          (window as any).ethereum
       }
 
       if (!ethereum) {
@@ -95,10 +118,9 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsConnected(true);
       setWalletAddress(await signer.getAddress());
       setNetworkName(network.name);
-      setEthBalance(
-        formatEther(await provider.getBalance(await signer.getAddress()))
-      );
-      // setCauseBalance(formatEther(await provider.getBalance(await signer.getAddress())));
+      
+      // Fetch ETH and CAUSE balances
+      await fetchBalances(provider, signer);
 
       toast({
         title: "Success",
@@ -219,27 +241,18 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const fetchBalances = async () => {
-    if (!provider || !signer) return;
-
+  const fetchBalances = async (provider: ethers.BrowserProvider, signer: ethers.Signer) => {
     try {
       const address = await signer.getAddress();
-      setWalletAddress(address);
 
-      const network = await provider.getNetwork();
-      setNetworkName(network.name);
-
+      // Fetch ETH balance
       const ethBalance = await provider.getBalance(address);
       setEthBalance(formatEther(ethBalance));
 
-      // Replace this with your actual CAUSE token contract address
-      const causeTokenAddress = "0x...";
-      const causeTokenABI = [
-        "function balanceOf(address) view returns (uint256)",
-      ];
+      // Fetch CAUSE token balance
       const causeToken = new ethers.Contract(
-        causeTokenAddress,
-        causeTokenABI,
+        CAUSE_TOKEN_ADDRESS,
+        CAUSE_TOKEN_ABI,
         provider
       );
       const causeBalance = await causeToken.balanceOf(address);
@@ -247,8 +260,35 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error fetching balances:", error);
       setError("Failed to fetch balances");
+      toast({
+        title: "Error",
+        description: "Failed to fetch balances",
+        variant: "destructive",
+      });
     }
   };
+
+  // Add an effect to update balances periodically
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    if (isConnected && provider && signer) {
+      // Fetch balances immediately
+      fetchBalances(provider, signer);
+
+      // Set up an interval to fetch balances every 30 seconds
+      intervalId = setInterval(() => {
+        fetchBalances(provider, signer);
+      }, 30000);
+    }
+
+    // Clean up the interval when the component unmounts or when the wallet disconnects
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [isConnected, provider, signer]);
 
   return (
     <StakingContext.Provider

@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Crypto Staking Platform",
+  title: "Cause Staking Platform",
   description: "Stake your crypto and earn rewards",
 };
 
