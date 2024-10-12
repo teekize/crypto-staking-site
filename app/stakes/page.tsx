@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useStaking } from "@/context/StakingContext";
+import { useStaking} from "@/context/StakingContext";
 import YourStakes from "@/components/your-stakes";
+import { Stake } from "@/context/StakingContext";
 
 export default function AllStakesPage() {
   const { stakes, isLoading, isConnected } = useStaking();
@@ -26,7 +27,7 @@ export default function AllStakesPage() {
       ) : (
         <div className="space-y-4">
           {stakes.map((stake) => (
-            <YourStakes key={stake.id} stake={stake} />
+            <YourStakes key={stake.id} stake={stake as Stake} />
           ))}
         </div>
       )}

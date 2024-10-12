@@ -3,16 +3,15 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { toast } from "@/hooks/use-toast";
-import { formatEther, BigNumber } from "ethers";
+import { formatEther, parseEther } from "ethers";
 
-interface Stake {
-  id: number;
-  amount: string;
-  period: number;
-  startDate: Date;
-  endDate: Date;
-  return: string;
-  vested: string;
+export interface Stake {
+  id: string;
+  amount: number;
+  startTime: number;
+  duration: number;
+  lastVestingTime: number;
+  vestedAmount: number;
 }
 
 interface StakingContextType {
@@ -47,15 +46,15 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isConnected, setIsConnected] = useState(false);
   const [stakes, setStakes] = useState<Stake[]>([
     {
-      id: 12,
-      amount: "10",
-      period: 10,
-      startDate: new Date(),
-      endDate: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000),
-      return: "200",
-      vested: "0",
+      id: "12",
+      amount: 10,
+      duration: 31536000, // 1 year in seconds
+      startTime: Math.floor(Date.now() / 1000),
+      lastVestingTime: Math.floor(Date.now() / 1000),
+      vestedAmount: 0,
     },
   ]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
@@ -132,22 +131,17 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
-  // Implement fetchStakes, addStake, and vestStake functions here
-  // These will depend on your actual smart contract implementation
-  // For now, we'll use placeholder implementations
-
   const fetchStakes = async () => {
-    // Implement fetching stakes from your smart contract
     // This is a placeholder implementation
+    // Replace with actual contract call when implemented
     setStakes([
       {
-        id: 0,
-        amount: ethers.utils.parseEther("100").toString(),
-        period: 1,
-        startDate: new Date(),
-        endDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-        return: ethers.utils.parseEther("10").toString(),
-        vested: "0",
+        id: "0",
+        amount: 100,
+        duration: 31536000, // 1 year in seconds
+        startTime: Math.floor(Date.now() / 1000),
+        lastVestingTime: Math.floor(Date.now() / 1000),
+        vestedAmount: 0,
       },
     ]);
   };
@@ -157,18 +151,15 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsLoading(true);
     try {
-      // Implement adding a stake to your smart contract
       // This is a placeholder implementation
+      // Replace with actual contract call when implemented
       const newStake: Stake = {
-        id: stakes.length,
-        amount: ethers.utils.parseEther(amount.toString()).toString(),
-        period,
-        startDate: new Date(),
-        endDate: new Date(Date.now() + period * 365 * 24 * 60 * 60 * 1000),
-        return: ethers.utils
-          .parseEther((amount * 0.1 * period).toString())
-          .toString(),
-        vested: "0",
+        id: stakes.length.toString(),
+        amount: amount,
+        duration: period * 31536000, // Convert years to seconds
+        startTime: Math.floor(Date.now() / 1000),
+        lastVestingTime: Math.floor(Date.now() / 1000),
+        vestedAmount: 0,
       };
 
       setStakes([...stakes, newStake]);
@@ -195,16 +186,17 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsLoading(true);
     try {
-      // Implement vesting a stake in your smart contract
       // This is a placeholder implementation
+      // Replace with actual contract call when implemented
       setStakes(
         stakes.map((stake) => {
-          if (stake.id === stakeId) {
-            const currentVested = BigNumber.from(stake.vested);
-            const amountToVest = BigNumber.from(stake.amount).div(20); // 5% of the stake
-            const newVested = currentVested.add(amountToVest);
-
-            return { ...stake, vested: newVested.toString() };
+          if (stake.id === stakeId.toString()) {
+            const amountToVest = stake.amount * 0.05; // 5% of the stake
+            return {
+              ...stake,
+              vestedAmount: stake.vestedAmount + amountToVest,
+              lastVestingTime: Math.floor(Date.now() / 1000),
+            };
           }
           return stake;
         })

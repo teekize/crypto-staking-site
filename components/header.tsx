@@ -8,10 +8,10 @@ export default function Header() {
   const { isConnected, disconnectWallet } = useStaking();
 
   return (
-    <header className="bg-light-red bg-opacity-50 text-black  py-4 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-md flex justify-between items-center">
+    <header className="bg-light-red bg-opacity-50 text-black py-6 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-4xl flex justify-between items-center">
         <motion.h1
-          className="text-xl sm:text-2xl font-bold"
+          className="text-2xl sm:text-3xl font-bold"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

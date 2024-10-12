@@ -60,12 +60,12 @@ export default function StakingDashboard() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="Enter amount"
-              className="pr-16"
+              className="pr-20"
             />
             <Button
-              className="absolute right-0 top-0 bottom-0 px-3 sm:px-12"
+              className="absolute right-0 top-0 h-full rounded-l-none w-32"
               onClick={setMaxBalance}
-              variant="outline"
+              variant="secondary"
             >
               Max
             </Button>

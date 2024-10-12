@@ -20,7 +20,7 @@ const StakingInfo: React.FC = () => {
         <CardContent className="text-center">
           <p className="mb-4 text-gray-700">
             Staking is a way to earn rewards by holding and locking up your
-            cryptocurrency. It's like earning interest on your savings, but with
+            cryptocurrency. It&apos;s like earning interest on your savings, but with
             potentially higher returns!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">

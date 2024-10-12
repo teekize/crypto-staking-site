@@ -5,6 +5,7 @@ import StakeList from "@/components/stake-list";
 import ErrorBoundary from "@/components/error-boundary";
 import LandingPage from "@/components/LandingPage";
 import { useStaking } from "@/context/StakingContext";
+import WalletInfoWrapper from "@/components/WalletInfoWrapper";
 
 export default function Home() {
   const { isConnected } = useStaking();
@@ -12,18 +13,27 @@ export default function Home() {
   return (
     <ErrorBoundary>
       {!isConnected ? (
-        <LandingPage />
-      ) : (
-        <div className="flex flex-col items-center h-full space-y-6 overflow-auto">
-          <div className="w-full max-w-2xl">
-            <Suspense fallback={<div>Loading...</div>}>
-              <StakingDashboard />
-            </Suspense>
+        <div className="flex justify-center">
+          <div className="w-full max-w-3xl">
+            <LandingPage />
           </div>
-          <div className="w-full max-w-2xl">
-            <Suspense fallback={<div>Loading stakes...</div>}>
-              <StakeList />
-            </Suspense>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <div className="w-full max-w-4xl">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="md:w-3/5">
+                <Suspense fallback={<div>Loading...</div>}>
+                  <StakingDashboard />
+                </Suspense>
+                <Suspense fallback={<div>Loading stakes...</div>}>
+                  <StakeList />
+                </Suspense>
+              </div>
+              <div className="md:w-2/5">
+                <WalletInfoWrapper />
+              </div>
+            </div>
           </div>
         </div>
       )}
