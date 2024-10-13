@@ -1,7 +1,7 @@
 // components/staking-dashboard.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,15 +21,15 @@ export default function StakingDashboard() {
   const [amount, setAmount] = useState("");
   const [period, setPeriod] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { addStake, isLoading, isConnected, causeBalance } = useStaking();
+  const { addStake, isLoading, isConnected, causeBalance, currentTransaction } = useStaking();
 
   const calculateReturn = () => {
     return parseFloat(amount) * 0.1 * period;
   };
 
   const handleStake = async () => {
+    setIsOpen(false); // Close the modal immediately
     await addStake(parseFloat(amount), period);
-    setIsOpen(false);
     setAmount("");
     setPeriod(1);
   };
@@ -44,7 +44,7 @@ export default function StakingDashboard() {
 
   return (
     <motion.div
-      className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8"
+      className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8 relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -110,7 +110,7 @@ export default function StakingDashboard() {
                 Cancel
               </Button>
               <Button onClick={handleStake} disabled={isLoading}>
-                {isLoading ? "Processing..." : "Confirm Stake"}
+                Confirm Stake
               </Button>
             </DialogFooter>
           </DialogContent>

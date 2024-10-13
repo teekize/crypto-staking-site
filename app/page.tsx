@@ -6,9 +6,10 @@ import ErrorBoundary from "@/components/error-boundary";
 import LandingPage from "@/components/LandingPage";
 import { useStaking } from "@/context/StakingContext";
 import WalletInfoWrapper from "@/components/WalletInfoWrapper";
+import TransactionStatus from "@/components/TransactionStatus";
 
 export default function Home() {
-  const { isConnected } = useStaking();
+  const { isConnected, currentTransaction } = useStaking();
 
   return (
     <ErrorBoundary>
@@ -35,6 +36,11 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {currentTransaction && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <TransactionStatus />
         </div>
       )}
     </ErrorBoundary>

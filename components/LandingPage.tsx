@@ -3,18 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useStaking } from "@/context/StakingContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RiCoinLine, RiTimeLine, RiPercentLine } from "react-icons/ri";
+import { RiCoinLine, RiTimeLine, RiPercentLine, RiBitCoinLine } from "react-icons/ri";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 
 const LandingPage: React.FC = () => {
   const { connectWallet, isLoading } = useStaking();
   const [isOpen, setIsOpen] = useState(false);
-  const [connectingWallet, setConnectingWallet] = useState<
-    "metamask" | "trustwallet" | null
-  >(null);
+  const [connectingWallet, setConnectingWallet] = useState<WalletType | null>(null);
 
-  const handleConnect = async (walletType: "metamask" | "trustwallet") => {
+  const handleConnect = async (walletType: WalletType) => {
     setConnectingWallet(walletType);
     setIsOpen(false);
     try {
@@ -182,6 +180,14 @@ const LandingPage: React.FC = () => {
                     className="mr-2"
                   />
                   Trust Wallet
+                </Button>
+                <Button
+                  onClick={() => handleConnect("binancechain")}
+                  disabled={isLoading || !!connectingWallet}
+                  className="py-3 text-lg flex items-center justify-center bg-[#F0B90B] text-white hover:bg-[#F0B90B]/90"
+                >
+                  <RiBitCoinLine className="mr-2 text-2xl" />
+                  Binance Chain Wallet
                 </Button>
               </div>
               <Button
