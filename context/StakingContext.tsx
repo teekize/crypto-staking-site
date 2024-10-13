@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { ethers, BigNumber } from "ethers";
+import { ethers } from "ethers";
 import { toast } from "@/hooks/use-toast";
 import { formatEther, parseEther } from "ethers";
 
@@ -19,9 +19,9 @@ type WalletType = "metamask" | "trustwallet" | "binancechain";
 
 interface TransactionStatus {
   type: string;
-  status: 'pending' | 'confirmed' | 'failed';
-  hash?: string;
-  message?: string;
+  status: "pending" | "confirmed" | "failed";
+  hash: string;
+  message: string;
 }
 
 interface StakingContextType {
@@ -43,7 +43,9 @@ interface StakingContextType {
   ) => Promise<void>;
   sendTokens: (recipient: string, amount: string) => Promise<void>;
   currentTransaction: TransactionStatus | null;
-  setCurrentTransaction: React.Dispatch<React.SetStateAction<TransactionStatus | null>>;
+  setCurrentTransaction: React.Dispatch<
+    React.SetStateAction<TransactionStatus | null>
+  >;
 }
 
 const StakingContext = createContext<StakingContextType | undefined>(undefined);
@@ -1219,7 +1221,10 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     setStakingContract,
   ] = useState<ethers.Contract | null>(null);
 
-  const [currentTransaction, setCurrentTransaction] = useState<TransactionStatus | null>(null);
+  const [
+    currentTransaction,
+    setCurrentTransaction,
+  ] = useState<TransactionStatus | null>(null);
 
   const connectWallet = async (walletType: WalletType) => {
     setIsLoading(true);
@@ -1302,7 +1307,7 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
   // Fetch stakes from the contract
   const fetchStakes = async () => {
     console.log("Starting fetchStakes function");
-    
+
     if (!stakingContract) {
       console.error("Staking contract is not available");
       return;
@@ -1322,17 +1327,21 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       const stakesData = await stakingContract.getStakes(address);
       console.log("Raw stakes data:", stakesData);
 
-      const fetchedStakes: Stake[] = stakesData.map((stakeData: any, index: number) => {
-        console.log(`Processing stake ${index}:`, stakeData);
-        return {
-          id: index.toString(),
-          amount: parseFloat(ethers.formatEther(stakeData.amount.toString())),
-          startTime: Number(stakeData.startTime),
-          duration: Number(stakeData.duration),
-          lastVestingTime: Number(stakeData.lastVestingTime),
-          vestedAmount: parseFloat(ethers.formatEther(stakeData.vestedAmount.toString())),
-        };
-      });
+      const fetchedStakes: Stake[] = stakesData.map(
+        (stakeData: any, index: number) => {
+          console.log(`Processing stake ${index}:`, stakeData);
+          return {
+            id: index.toString(),
+            amount: parseFloat(ethers.formatEther(stakeData.amount.toString())),
+            startTime: Number(stakeData.startTime),
+            duration: Number(stakeData.duration),
+            lastVestingTime: Number(stakeData.lastVestingTime),
+            vestedAmount: parseFloat(
+              ethers.formatEther(stakeData.vestedAmount.toString())
+            ),
+          };
+        }
+      );
 
       console.log("Processed stakes:", fetchedStakes);
       setStakes(fetchedStakes);
@@ -1346,7 +1355,8 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       setError(err instanceof Error ? err.message : "Failed to fetch stakes");
       toast({
         title: "Error",
-        description: err instanceof Error ? err.message : "Failed to fetch stakes",
+        description:
+          err instanceof Error ? err.message : "Failed to fetch stakes",
         variant: "destructive",
       });
     } finally {
@@ -1362,7 +1372,13 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     setIsLoading(true);
-    setCurrentTransaction({ type: 'Add Stake', status: 'pending' });
+    setCurrentTransaction({
+      type: 'Add Stake',
+      status: 'pending',
+      hash: '',
+      message: 'Initiating stake transaction'
+    });
+
     try {
       console.log("Starting addStake function");
       const amountInWei = ethers.parseEther(amount.toString());
@@ -1415,11 +1431,21 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Attempting to stake");
       const tx = await stakingContract.stake(amountInWei, durationInSeconds);
       console.log("Stake transaction sent:", tx.hash);
-      setCurrentTransaction(prev => ({ ...prev, hash: tx.hash }));
-      
+      setCurrentTransaction(prev => ({
+        type: prev?.type || 'Add Stake',
+        status: 'pending',
+        hash: tx.hash,
+        message: prev?.message || 'Transaction sent'
+      }));
+
       await tx.wait();
       console.log("Stake transaction confirmed");
-      setCurrentTransaction(prev => ({ ...prev, status: 'confirmed' }));
+      setCurrentTransaction(prev => ({
+        type: prev?.type || 'Add Stake',
+        status: 'confirmed',
+        hash: prev?.hash || '',
+        message: 'Transaction confirmed'
+      }));
 
       toast({
         title: "Success",
@@ -1431,7 +1457,12 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (err) {
       console.error("Failed to add stake:", err);
       setError(err instanceof Error ? err.message : "Failed to add stake");
-      setCurrentTransaction(prev => ({ ...prev, status: 'failed', message: err instanceof Error ? err.message : "Failed to add stake" }));
+      setCurrentTransaction(prev => ({
+        type: prev?.type || 'Add Stake',
+        status: 'failed',
+        hash: prev?.hash || '',
+        message: err instanceof Error ? err.message : "Failed to add stake"
+      }));
       toast({
         title: "Error",
         description: err instanceof Error ? err.message : "Failed to add stake",
@@ -1439,8 +1470,6 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       });
     } finally {
       setIsLoading(false);
-      // Remove transaction status after a delay
-      setTimeout(() => setCurrentTransaction(null), 5000);
     }
   };
 

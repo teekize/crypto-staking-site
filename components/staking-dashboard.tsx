@@ -1,7 +1,7 @@
 // components/staking-dashboard.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,12 @@ export default function StakingDashboard() {
   const [amount, setAmount] = useState("");
   const [period, setPeriod] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { addStake, isLoading, isConnected, causeBalance, currentTransaction } = useStaking();
+  const {
+    addStake,
+    isLoading,
+    isConnected,
+    causeBalance,
+  } = useStaking();
 
   const calculateReturn = () => {
     return parseFloat(amount) * 0.1 * period;
@@ -95,7 +100,9 @@ export default function StakingDashboard() {
         </div>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button className="w-full py-4 sm:py-2 text-base sm:text-sm">Place Stake</Button>
+            <Button className="w-full py-4 sm:py-2 text-base sm:text-sm">
+              Place Stake
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

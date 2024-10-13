@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiCoinLine, RiTimeLine, RiPercentLine, RiBitCoinLine } from "react-icons/ri";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+type WalletType = "metamask" | "trustwallet" | "binancechain";
 
 const LandingPage: React.FC = () => {
   const { connectWallet, isLoading } = useStaking();
