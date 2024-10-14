@@ -3,12 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useStaking } from "@/context/StakingContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  RiCoinLine,
-  RiTimeLine,
-  RiPercentLine,
-  RiBitCoinLine,
-} from "react-icons/ri";
+import { RiCoinLine, RiTimeLine, RiPercentLine } from "react-icons/ri";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 type WalletType = "metamask" | "trustwallet";
