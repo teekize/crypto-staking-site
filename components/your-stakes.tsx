@@ -15,6 +15,10 @@ import { useStaking, Stake } from "@/context/StakingContext";
 interface YourStakesProps {
   stake: Stake;
 }
+const formatDuration = (seconds: number) => {
+  const years = Math.floor(seconds / (365 * 24 * 60 * 60));
+  return `${years} year${years !== 1 ? 's' : ''}`;
+};
 
 export default function YourStakes({ stake }: YourStakesProps) {
   const { vestStake, isLoading } = useStaking();
@@ -43,7 +47,7 @@ export default function YourStakes({ stake }: YourStakesProps) {
               <DialogTitle>Stake Details</DialogTitle>
               <DialogDescription>
                 <p>Amount: {stake.amount} tokens</p>
-                <p>Period: {stake.duration} year(s)</p>
+                <p>Period: {formatDuration(stake.duration)} </p>
                 <p>Start Date: {stake.startTime}</p>
                 <p>
                   End Date:{" "}
