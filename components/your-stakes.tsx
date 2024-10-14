@@ -17,13 +17,15 @@ interface YourStakesProps {
 }
 const formatDuration = (seconds: number) => {
   const years = Math.floor(seconds / (365 * 24 * 60 * 60));
-  return `${years} year${years !== 1 ? 's' : ''}`;
+  return `${years} year${years !== 1 ? "s" : ""}`;
 };
 
 export default function YourStakes({ stake }: YourStakesProps) {
   const { vestStake, isLoading } = useStaking();
   // const isVestingPeriodElapsed = new Date() > (stake.startTime + stake.duration * 365 * 24 * 60 * 60);
-  const isVestingPeriodElapsed = new Date() > new Date(stake.startTime + stake.duration * 365 * 24 * 60 * 60 * 1000);
+  const isVestingPeriodElapsed =
+    new Date() >
+    new Date(stake.startTime + stake.duration * 365 * 24 * 60 * 60 * 1000);
 
   return (
     <motion.div
@@ -32,9 +34,15 @@ export default function YourStakes({ stake }: YourStakesProps) {
       transition={{ duration: 0.2 }}
     >
       <p className="text-sm sm:text-base">Amount: {stake.amount} tokens</p>
-      <p className="text-sm sm:text-base">Period: {stake.duration} year(s)</p>
-      <p className="text-sm sm:text-base">Return: {stake.amount * 0.1} tokens</p>
-      <p className="text-sm sm:text-base">Vested: {stake.vestedAmount} tokens</p>
+      <p className="text-sm sm:text-base">
+        Period: {formatDuration(stake.duration)}
+      </p>
+      <p className="text-sm sm:text-base">
+        Return: {stake.amount * 0.1} tokens
+      </p>
+      <p className="text-sm sm:text-base">
+        Vested: {stake.vestedAmount} tokens
+      </p>
       <div className="mt-2 space-x-2 flex flex-wrap gap-2">
         <Dialog>
           <DialogTrigger asChild>
