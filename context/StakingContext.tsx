@@ -15,7 +15,7 @@ export interface Stake {
 }
 
 // Update the WalletType to include "binancechain"
-type WalletType = "metamask" | "trustwallet" | "binancechain";
+type WalletType = "metamask" | "trustwallet" ;
 
 interface TransactionStatus {
   type: string;
