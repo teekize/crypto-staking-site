@@ -22,8 +22,8 @@ export default function Home() {
       ) : (
         <div className="flex justify-center">
           <div className="w-full max-w-4xl">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="md:w-3/5">
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="md:w-3/5 space-y-6">
                 <Suspense fallback={<div>Loading...</div>}>
                   <StakingDashboard />
                 </Suspense>

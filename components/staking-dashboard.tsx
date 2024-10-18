@@ -49,7 +49,7 @@ export default function StakingDashboard() {
 
   return (
     <motion.div
-      className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8 relative"
+      className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8 mt-3 relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

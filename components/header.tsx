@@ -8,7 +8,7 @@ export default function Header() {
   const { isConnected, disconnectWallet } = useStaking();
 
   return (
-    <header className="bg-light-red bg-opacity-50 text-black py-6 px-4 sm:px-6 lg:px-8">
+    <header className="bg-gradient-to-r from-yellow-300 to-yellow-400 text-black py-6 px-4 sm:px-6 lg:px-8 shadow-md">
       <div className="container mx-auto max-w-4xl flex justify-between items-center">
         <motion.h1
           className="text-2xl sm:text-3xl font-bold"
@@ -28,7 +28,7 @@ export default function Header() {
               variant="outline"
               size="sm"
               onClick={disconnectWallet}
-              className="bg-white text-light-red border-white hover:bg-transparent hover:text-white transition-colors"
+              className="bg-white text-yellow-600 border-yellow-400 hover:bg-yellow-50 hover:text-yellow-700 transition-colors"
             >
               Disconnect Wallet
             </Button>

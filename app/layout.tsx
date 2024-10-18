@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} bg-light-red bg-opacity-50 overflow-hidden`}
+        className={`${poppins.className} bg-gradient-to-b from-yellow-400 to-yellow-400 overflow-hidden`}
       >
         <ThemeProvider
           attribute="class"
