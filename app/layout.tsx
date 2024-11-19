@@ -13,8 +13,19 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Cause Staking Platform",
-  description: "Stake your crypto and earn rewards",
+  title: "Cause Coin",
+  description: "Cause Capitalism. The Currency for Humanity.",
+  icons: {
+    icon: [
+      { url: '/cause-fav.svg', type: 'image/svg+xml' }
+    ],
+    shortcut: '/cause-fav.svg',
+    apple: '/cause-fav.svg',
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/cause-fav.svg",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -24,9 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className} bg-gradient-to-b from-yellow-400 to-yellow-400 overflow-hidden`}
-      >
+      <body className={`${poppins.className} bg-white`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -34,13 +43,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <StakingProvider>
-            <div className="flex flex-col h-screen">
-              <Header />
-              <main className="flex-grow overflow-hidden">
-                <div className="container h-full mx-auto px-4">
-                  {children}
-                </div>
-              </main>
+            <div className="flex flex-col min-h-screen">
+              <main className="flex-grow">{children}</main>
             </div>
             <Toaster />
           </StakingProvider>
