@@ -1,128 +1,120 @@
 // components/staking-dashboard.tsx
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useStaking } from "@/context/StakingContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useStaking } from "@/context/StakingContext";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-export default function StakingDashboard() {
+const StakingDashboard = () => {
+  const { stake, rewards, totalStaked, balance } = useStaking();
   const [amount, setAmount] = useState("");
-  const [period, setPeriod] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
-  const {
-    addStake,
-    isLoading,
-    isConnected,
-    causeBalance,
-  } = useStaking();
-
-  const calculateReturn = () => {
-    return parseFloat(amount) * 0.1 * period;
-  };
+  const [selectedPeriod, setSelectedPeriod] = useState(1); // 1, 2, or 3 years
 
   const handleStake = async () => {
-    setIsOpen(false); // Close the modal immediately
-    await addStake(parseFloat(amount), period);
+    if (!amount) return;
+    await stake(parseFloat(amount));
     setAmount("");
-    setPeriod(1);
   };
 
-  const setMaxBalance = () => {
-    setAmount(causeBalance || "0");
+  const handleMaxAmount = () => {
+    setAmount(balance.toString());
   };
 
-  if (!isConnected) {
-    return null;
-  }
+  const calculateReturn = () => {
+    if (!amount) return "NaN";
+    return parseFloat(amount) * (selectedPeriod * 0.1);
+  };
 
   return (
-    <motion.div
-      className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8 mt-3 relative"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <h2 className="text-xl sm:text-2xl font-bold mb-4">Stake Your Crypto</h2>
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="amount">Amount to Stake</Label>
-          <div className="relative mt-1">
-            <Input
-              id="amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
-              className="pr-20"
-            />
-            <Button
-              className="absolute right-0 top-0 h-full rounded-l-none w-32"
-              onClick={setMaxBalance}
-              variant="secondary"
-            >
-              Max
-            </Button>
-          </div>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-[#8B4513]">Stake Your Crypto</h2>
+
+      {/* Amount Input Section */}
+      <div className="space-y-2">
+        <label className="text-sm text-[#8B4513]/70">Amount to Stake</label>
+        <div className="relative">
+          <Input
+            type="number"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="w-full pr-16 border border-[#DAA520]/30 rounded-lg h-12 focus:ring-[#B8860B]/20 focus:border-[#B8860B]"
+          />
+          <button
+            onClick={handleMaxAmount}
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 text-sm font-medium text-[#B8860B] hover:text-[#DAA520] transition-colors"
+          >
+            Max
+          </button>
         </div>
-        <div>
-          <Label>Stake Period</Label>
-          <div className="flex flex-col sm:grid sm:grid-cols-3 gap-2 mt-1">
-            {[1, 2, 3].map((year) => (
-              <Button
-                key={year}
-                onClick={() => setPeriod(year)}
-                variant={period === year ? "default" : "outline"}
-                className="w-full py-4 sm:py-2 text-base sm:text-sm"
-              >
-                {year} Year{year > 1 ? "s" : ""}
-                <br />
-                <span className="text-sm"> @ {year * 10}% Return</span>
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className="text-sm text-gray-600">
-            Estimated Return: {calculateReturn()} tokens
-          </p>
-        </div>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button className="w-full py-4 sm:py-2 text-base sm:text-sm">
-              Place Stake
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Confirm Stake</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to stake {amount} tokens for {period}{" "}
-                year(s)?
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleStake} disabled={isLoading}>
-                Confirm Stake
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
-    </motion.div>
+
+      {/* Stake Period Selection */}
+      <div className="space-y-2">
+        <label className="text-sm text-[#8B4513]/70">Stake Period</label>
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { years: 1, return: 10 },
+            { years: 2, return: 20 },
+            { years: 3, return: 30 },
+          ].map((period) => (
+            <button
+              key={period.years}
+              onClick={() => setSelectedPeriod(period.years)}
+              className={`p-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                selectedPeriod === period.years
+                  ? 'bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white shadow-md'
+                  : 'bg-[#FDF5E6] text-[#8B4513] hover:bg-[#FFD700]/20'
+              }`}
+            >
+              {period.years} Year{period.years > 1 ? 's' : ''} @ {period.return}% Return
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Estimated Return */}
+      <div className="bg-[#FDF5E6] rounded-lg p-4">
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-[#8B4513]/70">Estimated Return:</span>
+          <span className="text-lg font-medium text-[#8B4513]">
+            {calculateReturn()} tokens
+          </span>
+        </div>
+      </div>
+
+      {/* Stake Button */}
+      <Button
+        onClick={handleStake}
+        className="w-full h-12 text-lg bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white hover:from-[#DAA520] hover:to-[#B8860B] transition-all duration-300 shadow-md hover:shadow-lg"
+      >
+        Place Stake
+      </Button>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-3 gap-4 mt-8">
+        <div className="bg-[#FDF5E6] rounded-lg p-4">
+          <p className="text-sm text-[#8B4513]/70 mb-1">Total Staked</p>
+          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
+          <p className="text-lg text-[#8B4513]">{totalStaked}</p>
+        </div>
+        
+        <div className="bg-[#FDF5E6] rounded-lg p-4">
+          <p className="text-sm text-[#8B4513]/70 mb-1">Available Balance</p>
+          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
+          <p className="text-lg text-[#8B4513]">{balance}</p>
+        </div>
+        
+        <div className="bg-[#FDF5E6] rounded-lg p-4">
+          <p className="text-sm text-[#8B4513]/70 mb-1">Rewards Earned</p>
+          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
+          <p className="text-lg text-[#8B4513]">{rewards}</p>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default StakingDashboard;

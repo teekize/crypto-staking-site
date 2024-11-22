@@ -9,6 +9,8 @@ import { Link as ScrollLink, Element } from "react-scroll";
 import ethereumIcon from "@/public/ethereum_icon.png";
 import trustWalletIcon from "@/public/trustwallet.png";
 import metamaskIcon from "@/public/metamask.png";
+import Link from "next/link";
+import { RiCoinLine, RiWalletLine, RiCreditCardLine } from "react-icons/ri";
 
 // Define types
 type ButtonProps = {
@@ -52,8 +54,8 @@ const Header: React.FC = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleMobileMenu = () => {
@@ -61,11 +63,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-md border-b border-[#FFD700]/20' 
-          : 'bg-transparent'
+        isScrolled
+          ? "bg-white/80 backdrop-blur-md border-b border-[#FFD700]/20"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -73,10 +75,18 @@ const Header: React.FC = () => {
           {/* Logo/Brand */}
           <div className="flex items-center">
             <h1 className="text-3xl md:text-4xl font-bold">
-              <span className={`${isScrolled ? 'text-[#B8860B]' : 'text-white'} transition-colors duration-300`}>
+              <span
+                className={`${
+                  isScrolled ? "text-[#B8860B]" : "text-white"
+                } transition-colors duration-300`}
+              >
                 Cause
               </span>
-              <span className={`text-sm md:text-base ${isScrolled ? 'text-[#8B4513]/70' : 'text-white/70'} transition-colors duration-300`}>
+              <span
+                className={`text-sm md:text-base ${
+                  isScrolled ? "text-[#8B4513]/70" : "text-white/70"
+                } transition-colors duration-300`}
+              >
                 coin
               </span>
             </h1>
@@ -84,40 +94,38 @@ const Header: React.FC = () => {
 
           {/* Navigation Buttons */}
           <nav className="hidden md:flex items-center space-x-4">
-            <ScrollLink
-              to="staking"
-              smooth={true}
-              duration={500}
+            <Link
+              href="/staking"
               className={`px-4 py-2 transition-colors duration-300 cursor-pointer ${
-                isScrolled ? 'text-[#B8860B] hover:text-[#DAA520]' : 'text-white hover:text-white/80'
+                isScrolled
+                  ? "text-[#B8860B] hover:text-[#DAA520]"
+                  : "text-white hover:text-white/80"
               }`}
-              activeClass="text-[#DAA520]"
-              spy={true}
             >
               Staking
-            </ScrollLink>
-
-            <ScrollLink
-              to="price"
-              smooth={true}
-              duration={500}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
-                isScrolled 
-                  ? 'bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white hover:from-[#DAA520] hover:to-[#B8860B]' 
-                  : 'bg-white/20 text-white hover:bg-white/30'
-              }`}
-            >
-              Price
-            </ScrollLink>
+            </Link>
 
             <a
-              href="/whitepaper.pdf"
+              href="https://coinmarketcap.com/dexscan/bsc/0x76dee8fd5734d507504593dd7a88e82ceefdaded/"
               target="_blank"
               rel="noopener noreferrer"
               className={`px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
-                isScrolled 
-                  ? 'border border-[#B8860B] text-[#B8860B] hover:bg-[#B8860B] hover:text-white' 
-                  : 'border border-white text-white hover:bg-white/20'
+                isScrolled
+                  ? "bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white hover:from-[#DAA520] hover:to-[#B8860B]"
+                  : "bg-white/20 text-white hover:bg-white/30"
+              }`}
+            >
+              Price
+            </a>
+
+            <a
+              href="https://docs.google.com/document/d/1tQi3lG-PcbZlmp28XqIRkMWzudxW22fJqYg7-odeeac/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
+                isScrolled
+                  ? "border border-[#B8860B] text-[#B8860B] hover:bg-[#B8860B] hover:text-white"
+                  : "border border-white text-white hover:bg-white/20"
               }`}
             >
               Whitepaper
@@ -128,71 +136,70 @@ const Header: React.FC = () => {
               smooth={true}
               duration={500}
               className={`px-4 py-2 transition-colors duration-300 cursor-pointer ${
-                isScrolled ? 'text-[#8B4513]/80 hover:text-[#B8860B]' : 'text-white hover:text-white/80'
+                isScrolled
+                  ? "text-[#8B4513]/80 hover:text-[#B8860B]"
+                  : "text-white hover:text-white/80"
               }`}
             >
               About
             </ScrollLink>
 
-            <ScrollLink
-              to="team"
-              smooth={true}
-              duration={500}
+            <Link
+              href="/team"
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
             >
               Team
-            </ScrollLink>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className={`md:hidden p-2 transition-colors duration-300 cursor-pointer ${
-              isScrolled ? 'text-[#B8860B]' : 'text-white'
+              isScrolled ? "text-[#B8860B]" : "text-white"
             }`}
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} 
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={
+                  isMobileMenuOpen
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
+                }
               />
             </svg>
           </button>
         </div>
 
         {/* Mobile Menu */}
-        <div 
+        <div
           className={`${
-            isMobileMenuOpen ? 'block' : 'hidden'
+            isMobileMenuOpen ? "block" : "hidden"
           } md:hidden fixed inset-x-4 top-20 z-50`}
         >
           <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-lg border border-[#FFD700]/20 overflow-hidden">
             <div className="p-4 flex flex-col items-center space-y-3">
-              <ScrollLink
-                to="staking"
-                smooth={true}
-                duration={500}
-                className="px-6 py-2 text-[#B8860B] hover:text-[#DAA520] transition-colors duration-300 text-sm font-medium w-40 text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Staking
-              </ScrollLink>
-
-              <ScrollLink
-                to="price"
-                smooth={true}
-                duration={500}
+              <a
+                href="https://coinmarketcap.com/dexscan/bsc/0x76dee8fd5734d507504593dd7a88e82ceefdaded/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-2 bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white rounded-full text-sm font-medium w-40 text-center hover:from-[#DAA520] hover:to-[#B8860B] transition-all duration-300"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Price
-              </ScrollLink>
+              </a>
 
               <a
-                href="/whitepaper.pdf"
+                href="https://docs.google.com/document/d/1tQi3lG-PcbZlmp28XqIRkMWzudxW22fJqYg7-odeeac/edit"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-2 border border-[#B8860B] text-[#B8860B] rounded-full text-sm font-medium w-40 text-center hover:bg-[#B8860B]/10 transition-all duration-300"
@@ -211,15 +218,13 @@ const Header: React.FC = () => {
                 About
               </ScrollLink>
 
-              <ScrollLink
-                to="team"
-                smooth={true}
-                duration={500}
+              <Link
+                href="/team"
                 className="px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium w-40 text-center hover:bg-blue-700 transition-all duration-300"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Team
-              </ScrollLink>
+              </Link>
             </div>
 
             <div className="border-t border-[#FFD700]/10 p-3">
@@ -473,9 +478,13 @@ const COZTokenLandingPage: React.FC = () => {
         {/* Card Content with better spacing */}
         <div className="flex-grow flex flex-col justify-between">
           <div>
-            <p className="text-xs md:text-sm opacity-80 mb-1 text-white">Available Balance</p>
+            <p className="text-xs md:text-sm opacity-80 mb-1 text-white">
+              Available Balance
+            </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-xl md:text-3xl font-bold text-white">{amount}</span>
+              <span className="text-xl md:text-3xl font-bold text-white">
+                {amount}
+              </span>
               <span className="text-xs md:text-sm bg-white/20 rounded-full px-2 py-1 text-white">
                 {currency}
               </span>
@@ -579,65 +588,80 @@ const COZTokenLandingPage: React.FC = () => {
 
             {/* Features Section */}
             <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-4 relative isolate">
-              <motion.div
-                className="relative"
-                variants={{
-                  hidden: { opacity: 0, x: -20, rotateY: -15 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    rotateY: 0,
-                    transition: { duration: 0.6, ease: "easeOut" },
-                  },
-                }}
-              >
-                <Feature
-                  title="Ethereum Powered"
-                  description="Secure blockchain technology for global accessibility."
-                  icon={ethereumIcon.src}
-                  animationVariant="ethereum"
-                />
-              </motion.div>
+              {[
+                {
+                  icon: RiCoinLine,
+                  title: "Ethereum Powered",
+                  desc:
+                    "Secure blockchain technology for global accessibility.",
+                  color: "text-[#B8860B]",
+                },
+                {
+                  icon: RiWalletLine,
+                  title: "CauseWallet",
+                  desc:
+                    "Your all-in-one digital wallet with instant transactions.",
+                  color: "text-[#DAA520]",
+                },
+                {
+                  icon: RiCreditCardLine,
+                  title: "CauseCard",
+                  desc:
+                    "Spend your crypto anywhere with global card acceptance.",
+                  color: "text-[#CD853F]",
+                  isCard: true,
+                },
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-white/50 backdrop-blur-sm rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {item.isCard ? (
+                    <div className="relative h-48 bg-gradient-to-r from-[#B8860B] to-[#DAA520] rounded-xl p-6 shadow-lg overflow-hidden">
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-24 translate-x-24" />
+                      <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full translate-y-24 -translate-x-24" />
 
-              <motion.div
-                className="relative"
-                variants={{
-                  hidden: { opacity: 0, y: 20, scale: 0.9 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    transition: { duration: 0.6, delay: 0.1, ease: "easeOut" },
-                  },
-                }}
-              >
-                <Feature
-                  title="CauseWallet"
-                  description="Your all-in-one digital wallet with instant transactions."
-                  icon={trustWalletIcon.src}
-                  animationVariant="wallet"
-                />
-              </motion.div>
+                      <div className="relative z-10 h-full flex flex-col justify-between">
+                        <div className="w-12 h-8 bg-yellow-400/90 rounded-md">
+                          <div className="grid grid-cols-3 gap-1 p-1">
+                            {[...Array(6)].map((_, i) => (
+                              <div key={i} className="bg-yellow-600/60 h-1" />
+                            ))}
+                          </div>
+                        </div>
 
-              <motion.div
-                className="relative"
-                variants={{
-                  hidden: { opacity: 0, x: 20, rotateY: 15 },
-                  visible: {
-                    opacity: 1,
-                    x: 0,
-                    rotateY: 0,
-                    transition: { duration: 0.6, delay: 0.2, ease: "easeOut" },
-                  },
-                }}
-              >
-                <Feature
-                  title="CauseCard"
-                  description="Spend your crypto anywhere with global card acceptance."
-                  icon={metamaskIcon.src}
-                  animationVariant="card"
-                />
-              </motion.div>
+                        <div className="font-mono text-white/90 text-lg tracking-wider">
+                          •••• •••• •••• 4242
+                        </div>
+
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <p className="text-white/70 text-xs mb-1">
+                              CARD HOLDER
+                            </p>
+                            <p className="text-white text-sm font-medium">
+                              CAUSE CARD
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-white/70 text-xs">VALID THRU</p>
+                            <p className="text-white text-sm">12/25</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <item.icon className={`text-3xl mb-2 ${item.color}`} />
+                      <h3 className="font-semibold text-[#8B4513] text-base mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-[#8B4513]/70 text-sm">{item.desc}</p>
+                    </>
+                  )}
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.section>
@@ -656,9 +680,10 @@ const COZTokenLandingPage: React.FC = () => {
               One World. One Card.
             </h2>
             <p className="text-base md:text-xl mb-8 md:mb-12 text-center text-white px-4 max-w-3xl mx-auto">
-              The vision of Causecard is to be the most utilized virtual card in the global marketplace.
+              The vision of Causecard is to be the most utilized virtual card in
+              the global marketplace.
             </p>
-            
+
             {/* Cards Grid */}
             <div className="flex flex-col md:grid md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
               {[
@@ -672,7 +697,7 @@ const COZTokenLandingPage: React.FC = () => {
                 {
                   amount: "2,540",
                   currency: "Causecoin",
-                  description: "Cause Token Stays",
+                  description: "Cause Coin Stays",
                   additionalInfo: "+740 points",
                   delay: 0.1,
                 },
@@ -688,15 +713,15 @@ const COZTokenLandingPage: React.FC = () => {
                   key={index}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
-                    visible: { 
-                      opacity: 1, 
-                      y: 0, 
-                      transition: { 
-                        duration: 0.6, 
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.6,
                         delay: card.delay,
-                        ease: "easeOut"
-                      } 
-                    }
+                        ease: "easeOut",
+                      },
+                    },
                   }}
                   className="w-full flex justify-center"
                 >
@@ -737,13 +762,15 @@ const COZTokenLandingPage: React.FC = () => {
               >
                 <div className="space-y-4">
                   <h2 className="text-4xl md:text-5xl font-bold text-[#8B4513]">
-                    Download the <span className="text-[#B8860B]">Cause</span> Wallet
+                    Download the <span className="text-[#B8860B]">Cause</span>{" "}
+                    Wallet
                   </h2>
                   <p className="text-lg md:text-xl text-[#8B4513]/80">
                     The Wallet in Every Pocket.
                   </p>
                   <p className="text-base md:text-xl text-[#8B4513]/70">
-                    Get the app on your preferred platform and start managing your Cause tokens today.
+                    Get the app on your preferred platform and start managing
+                    your Cause tokens today.
                   </p>
                 </div>
 
@@ -855,13 +882,17 @@ const COZTokenLandingPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-between items-center">
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h3 className="text-2xl font-bold mb-4 text-[#B8860B]">Cause Token</h3>
+              <h3 className="text-2xl font-bold mb-4 text-[#B8860B]">
+                Cause Coin
+              </h3>
               <p className="text-[#8B4513]/80">
                 Your gateway to decentralized finance
               </p>
             </div>
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">
+                Quick Links
+              </h4>
               <ul className="space-y-2">
                 <li>
                   <ScrollLink
@@ -902,7 +933,9 @@ const COZTokenLandingPage: React.FC = () => {
               </ul>
             </div>
             <div className="w-full md:w-1/3">
-              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">Follow Us</h4>
+              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">
+                Follow Us
+              </h4>
               <div className="flex space-x-4">
                 <SocialLink platform="Twitter" link="twitter_url" />
                 <SocialLink platform="LinkedIn" link="linkedin_url" />
@@ -911,7 +944,7 @@ const COZTokenLandingPage: React.FC = () => {
           </div>
           <div className="mt-8 pt-8 border-t border-[#B8860B]/20 text-center text-[#8B4513]/60">
             <p>
-              &copy; {new Date().getFullYear()} Cause Token. All rights reserved.
+              &copy; {new Date().getFullYear()} Cause Coin. All rights reserved.
             </p>
           </div>
         </div>

@@ -4,7 +4,6 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useStaking } from '@/context/StakingContext'
-import YourStakes from './your-stakes'
 import Link from 'next/link'
 
 export default function StakeList() {
@@ -15,25 +14,67 @@ export default function StakeList() {
   }
 
   return (
-    <motion.div 
-      className="bg-white p-6 rounded-lg shadow-md"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-    >
-      <h2 className="text-xl sm:text-2xl font-bold mb-4">Your Stakes</h2>
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold text-[#8B4513]">Your Stakes</h2>
+      
       {isLoading ? (
-        <p>Loading stakes...</p>
+        <div className="animate-pulse space-y-4">
+          <div className="h-24 bg-[#FDF5E6] rounded-lg"></div>
+        </div>
       ) : stakes.length === 0 ? (
-        <p>You have no active stakes.</p>
+        <div className="bg-[#FDF5E6] rounded-lg p-6 text-center">
+          <p className="text-[#8B4513]/70">You have no active stakes.</p>
+        </div>
       ) : (
         <div className="space-y-4">
-          <YourStakes stake={stakes[0]} /> {/* Display only the most recent stake */}
-          <Link href="/stakes">
-            <Button className="w-full">View All Stakes</Button>
-          </Link>
+          {/* Most recent stake */}
+          <div className="bg-[#FDF5E6] rounded-lg p-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-[#8B4513]/70">Amount:</p>
+                <p className="text-lg font-medium text-[#8B4513]">
+                  {stakes[0].amount} tokens
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-[#8B4513]/70">Period:</p>
+                <p className="text-lg font-medium text-[#8B4513]">
+                  {stakes[0].period} year
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-[#8B4513]/70">Return:</p>
+                <p className="text-lg font-medium text-[#8B4513]">
+                  {stakes[0].return} tokens
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-[#8B4513]/70">Vested:</p>
+                <p className="text-lg font-medium text-[#8B4513]">
+                  {stakes[0].vested} tokens
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-4 flex justify-center">
+              <Button
+                variant="outline"
+                className="text-[#B8860B] border-[#B8860B] hover:bg-[#B8860B] hover:text-white transition-all duration-300"
+              >
+                View Details
+              </Button>
+            </div>
+          </div>
+
+          {/* View All Stakes Button */}
+          <Button
+            className="w-full bg-[#1a1a1a] hover:bg-black text-white transition-all duration-300"
+            asChild
+          >
+            <Link href="/stakes">View All Stakes</Link>
+          </Button>
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
