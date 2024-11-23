@@ -456,7 +456,7 @@ const COZTokenLandingPage: React.FC = () => {
                   icon: RiIdCardLine,
                   title: "CauseCard",
                   desc:
-                    "Spend your crypto anywhere with global card acceptance.",
+                    "Spend your cause anywhere with global card acceptance.",
                   color: "text-[#CD853F]",
                   isCard: true,
                 },
