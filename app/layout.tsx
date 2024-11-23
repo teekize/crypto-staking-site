@@ -4,7 +4,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/header";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -16,11 +15,9 @@ export const metadata: Metadata = {
   title: "Cause Coin",
   description: "Cause Capitalism. The Currency for Humanity.",
   icons: {
-    icon: [
-      { url: '/cause-fav.svg', type: 'image/svg+xml' }
-    ],
-    shortcut: '/cause-fav.svg',
-    apple: '/cause-fav.svg',
+    icon: [{ url: "/cause-fav.svg", type: "image/svg+xml" }],
+    shortcut: "/cause-fav.svg",
+    apple: "/cause-fav.svg",
     other: {
       rel: "apple-touch-icon-precomposed",
       url: "/cause-fav.svg",

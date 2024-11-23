@@ -15,7 +15,7 @@ export interface Stake {
 }
 
 // Update the WalletType to include "binancechain"
-type WalletType = "metamask" | "trustwallet" ;
+type WalletType = "metamask" | "trustwallet";
 
 interface TransactionStatus {
   type: string;
@@ -126,9 +126,7 @@ const CAUSE_TOKEN_ABI = [
     type: "error",
   },
   {
-    inputs: [
-      { internalType: "uint256", name: "deadline", type: "uint256" },
-    ],
+    inputs: [{ internalType: "uint256", name: "deadline", type: "uint256" }],
     name: "ERC2612ExpiredSignature",
     type: "error",
   },
@@ -1373,10 +1371,10 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsLoading(true);
     setCurrentTransaction({
-      type: 'Add Stake',
-      status: 'pending',
-      hash: '',
-      message: 'Initiating stake transaction'
+      type: "Add Stake",
+      status: "pending",
+      hash: "",
+      message: "Initiating stake transaction",
     });
 
     try {
@@ -1431,20 +1429,20 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Attempting to stake");
       const tx = await stakingContract.stake(amountInWei, durationInSeconds);
       console.log("Stake transaction sent:", tx.hash);
-      setCurrentTransaction(prev => ({
-        type: prev?.type || 'Add Stake',
-        status: 'pending',
+      setCurrentTransaction((prev) => ({
+        type: prev?.type || "Add Stake",
+        status: "pending",
         hash: tx.hash,
-        message: prev?.message || 'Transaction sent'
+        message: prev?.message || "Transaction sent",
       }));
 
       await tx.wait();
       console.log("Stake transaction confirmed");
-      setCurrentTransaction(prev => ({
-        type: prev?.type || 'Add Stake',
-        status: 'confirmed',
-        hash: prev?.hash || '',
-        message: 'Transaction confirmed'
+      setCurrentTransaction((prev) => ({
+        type: prev?.type || "Add Stake",
+        status: "confirmed",
+        hash: prev?.hash || "",
+        message: "Transaction confirmed",
       }));
 
       toast({
@@ -1457,11 +1455,11 @@ export const StakingProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (err) {
       console.error("Failed to add stake:", err);
       setError(err instanceof Error ? err.message : "Failed to add stake");
-      setCurrentTransaction(prev => ({
-        type: prev?.type || 'Add Stake',
-        status: 'failed',
-        hash: prev?.hash || '',
-        message: err instanceof Error ? err.message : "Failed to add stake"
+      setCurrentTransaction((prev) => ({
+        type: prev?.type || "Add Stake",
+        status: "failed",
+        hash: prev?.hash || "",
+        message: err instanceof Error ? err.message : "Failed to add stake",
       }));
       toast({
         title: "Error",

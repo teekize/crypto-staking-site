@@ -5,21 +5,20 @@ import { useStaking } from "@/context/StakingContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 const StakingDashboard = () => {
-  const { stake, rewards, totalStaked, balance } = useStaking();
+  const { addStake, causeBalance } = useStaking();
   const [amount, setAmount] = useState("");
   const [selectedPeriod, setSelectedPeriod] = useState(1); // 1, 2, or 3 years
 
   const handleStake = async () => {
     if (!amount) return;
-    await stake(parseFloat(amount));
+    await addStake(parseFloat(amount), selectedPeriod);
     setAmount("");
   };
 
   const handleMaxAmount = () => {
-    setAmount(balance.toString());
+    setAmount(causeBalance?.toString() || "");
   };
 
   const calculateReturn = () => {
@@ -29,7 +28,7 @@ const StakingDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-[#8B4513]">Stake Your Crypto</h2>
+      <h2 className="text-2xl font-bold text-[#8B4513]">Stake Your Cause</h2>
 
       {/* Amount Input Section */}
       <div className="space-y-2">
@@ -65,11 +64,12 @@ const StakingDashboard = () => {
               onClick={() => setSelectedPeriod(period.years)}
               className={`p-3 rounded-lg text-sm font-medium transition-all duration-300 ${
                 selectedPeriod === period.years
-                  ? 'bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white shadow-md'
-                  : 'bg-[#FDF5E6] text-[#8B4513] hover:bg-[#FFD700]/20'
+                  ? "bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white shadow-md"
+                  : "bg-[#FDF5E6] text-[#8B4513] hover:bg-[#FFD700]/20"
               }`}
             >
-              {period.years} Year{period.years > 1 ? 's' : ''} @ {period.return}% Return
+              {period.years} Year{period.years > 1 ? "s" : ""} @ {period.return}
+              % Return
             </button>
           ))}
         </div>
@@ -94,25 +94,6 @@ const StakingDashboard = () => {
       </Button>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-3 gap-4 mt-8">
-        <div className="bg-[#FDF5E6] rounded-lg p-4">
-          <p className="text-sm text-[#8B4513]/70 mb-1">Total Staked</p>
-          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
-          <p className="text-lg text-[#8B4513]">{totalStaked}</p>
-        </div>
-        
-        <div className="bg-[#FDF5E6] rounded-lg p-4">
-          <p className="text-sm text-[#8B4513]/70 mb-1">Available Balance</p>
-          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
-          <p className="text-lg text-[#8B4513]">{balance}</p>
-        </div>
-        
-        <div className="bg-[#FDF5E6] rounded-lg p-4">
-          <p className="text-sm text-[#8B4513]/70 mb-1">Rewards Earned</p>
-          <p className="text-xl font-bold text-[#8B4513]">CAUSE</p>
-          <p className="text-lg text-[#8B4513]">{rewards}</p>
-        </div>
-      </div>
     </div>
   );
 };

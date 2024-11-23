@@ -1,33 +1,23 @@
 "use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { QRCodeSVG } from "qrcode.react";
 import { Link as ScrollLink, Element } from "react-scroll";
-import ethereumIcon from "@/public/ethereum_icon.png";
-import trustWalletIcon from "@/public/trustwallet.png";
-import metamaskIcon from "@/public/metamask.png";
+
 import Link from "next/link";
-import { RiCoinLine, RiWalletLine, RiCreditCardLine } from "react-icons/ri";
+import { RiCoinLine, RiWalletLine, RiIdCardLine } from "react-icons/ri";
 
 // Define types
 type ButtonProps = {
   text: string;
   link: string;
-  action: string;
-};
-
-type FeatureProps = {
-  title: string;
-  description: string;
-  icon: string;
 };
 
 type QRCodeProps = {
   platform: string;
-  qrImage: string;
+
   link: string;
 };
 
@@ -40,7 +30,6 @@ type SpendingCardProps = {
   amount: string;
   currency: string;
   description: string;
-  additionalInfo?: string;
 };
 
 // Add this near the top with other components
@@ -242,16 +231,8 @@ const Header: React.FC = () => {
 const COZTokenLandingPage: React.FC = () => {
   // Create separate refs for each section
   const [aboutRef, aboutInView] = useInView();
-  const [featuresRef, featuresInView] = useInView();
   const [downloadRef, downloadInView] = useInView();
-  const [teamRef, teamInView] = useInView();
-
-  // const [aboutRef, aboutInView] = useInView()
-  // const [featuresRef, featuresInView] = useInView()
   const [spendingRef, spendingInView] = useInView();
-  const [cardsRef, cardsInView] = useInView();
-  // const [downloadRef, downloadInView] = useInView()
-  // const [teamRef, teamInView] = useInView()
 
   // Animation variants
   const fadeInUp = {
@@ -259,80 +240,13 @@ const COZTokenLandingPage: React.FC = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 1 } },
   };
 
-  const slideInLeft = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  };
-
-  const slideInRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  };
-
   const zoomIn = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1, transition: { duration: 1 } },
   };
 
-  const cardAnimation = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      rotateX: 45,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  // Update the icon animation variants to run continuously
-  const iconAnimations = {
-    ethereum: {
-      initial: { scale: 1 },
-      animate: {
-        scale: [1, 1.1, 1],
-        transition: {
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
-      },
-    },
-    wallet: {
-      initial: { y: 0 },
-      animate: {
-        y: [-2, 2, -2],
-        transition: {
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
-      },
-    },
-    card: {
-      initial: { opacity: 0.9, scale: 1 },
-      animate: {
-        opacity: [0.9, 1, 0.9],
-        scale: [1, 1.05, 1],
-        transition: {
-          duration: 2.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
-      },
-    },
-  };
-
   // Helper components
-  const Button: React.FC<ButtonProps> = ({ text, link, action }) => (
+  const Button: React.FC<ButtonProps> = ({ text, link }) => (
     <ScrollLink
       to={link.replace("#", "")}
       smooth={true}
@@ -346,67 +260,7 @@ const COZTokenLandingPage: React.FC = () => {
     </ScrollLink>
   );
 
-  const Feature: React.FC<
-    FeatureProps & { animationVariant: "ethereum" | "wallet" | "card" }
-  > = ({ title, description, icon, animationVariant }) => (
-    <motion.div
-      className="flex flex-col items-center p-4 md:p-6 rounded-lg transition duration-300 ease-in-out bg-gradient-to-br from-[#FFD700]/5 via-[#DAA520]/10 to-[#B8860B]/15 backdrop-blur-sm border border-[#FFD700]/20 h-[200px] md:h-[240px] w-full max-w-sm mx-auto overflow-hidden relative isolate"
-      variants={{
-        hidden: { opacity: 0, y: 20, scale: 0.95 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: {
-            duration: 0.5,
-            ease: "easeOut",
-          },
-        },
-      }}
-      whileHover={{
-        scale: 1.02,
-        boxShadow: "0 10px 20px -5px rgba(184, 134, 11, 0.2)",
-        transition: { duration: 0.3 },
-      }}
-    >
-      <motion.div
-        className="relative w-12 h-12 md:w-14 md:h-14 mb-3 md:mb-4"
-        initial={iconAnimations[animationVariant].initial}
-        animate={iconAnimations[animationVariant].animate}
-        style={{ zIndex: 1 }}
-      >
-        <Image
-          src={icon}
-          alt={title}
-          fill
-          className="object-contain"
-          style={{ filter: "drop-shadow(0 4px 6px rgba(184, 134, 11, 0.3))" }}
-        />
-      </motion.div>
-      <motion.h3
-        className="text-lg md:text-xl font-semibold mb-2 text-[#8B4513] text-center relative"
-        style={{ zIndex: 1 }}
-        variants={{
-          hidden: { opacity: 0, y: 5 },
-          visible: { opacity: 1, y: 0 },
-        }}
-      >
-        {title}
-      </motion.h3>
-      <motion.p
-        className="text-gray-700 text-center text-sm md:text-base px-2 relative"
-        style={{ zIndex: 1 }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1 },
-        }}
-      >
-        {description}
-      </motion.p>
-    </motion.div>
-  );
-
-  const QRCode: React.FC<QRCodeProps> = ({ platform, qrImage, link }) => (
+  const QRCode: React.FC<QRCodeProps> = ({ platform, link }) => (
     <div className="flex flex-col items-center">
       <QRCodeSVG value={link} size={128} />
       <p className="mt-2 text-lg font-semibold">{platform}</p>
@@ -451,7 +305,6 @@ const COZTokenLandingPage: React.FC = () => {
     amount,
     currency,
     description,
-    additionalInfo,
   }) => (
     <motion.div
       className="w-full md:w-96 h-[180px] md:h-56 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-2xl p-4 md:p-8 relative overflow-hidden isolate"
@@ -538,12 +391,8 @@ const COZTokenLandingPage: React.FC = () => {
               transact money.
             </p>
             <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row justify-center px-4">
-              <Button
-                text="Download Wallet"
-                link="#downloadWallet"
-                action="scroll"
-              />
-              <Button text="Learn More" link="#aboutCOZ" action="scroll" />
+              <Button text="Download Wallet" link="#downloadWallet" />
+              <Button text="Learn More" link="#aboutCOZ" />
             </div>
           </div>
         </motion.section>
@@ -578,10 +427,10 @@ const COZTokenLandingPage: React.FC = () => {
               >
                 <p>
                   Introducing a revolutionary financial ecosystem that
-                  transforms how we think about money. CauseCoin isn't just
-                  another cryptocurrency – it's a movement towards compassionate
-                  capitalism, where every transaction contributes to positive
-                  global change.
+                  transforms how we think about money. CauseCoin isn&apos;t just
+                  another cryptocurrency – it&apos;s a movement towards
+                  compassionate capitalism, where every transaction contributes
+                  to positive global change.
                 </p>
               </motion.div>
             </motion.div>
@@ -604,7 +453,7 @@ const COZTokenLandingPage: React.FC = () => {
                   color: "text-[#DAA520]",
                 },
                 {
-                  icon: RiCreditCardLine,
+                  icon: RiIdCardLine,
                   title: "CauseCard",
                   desc:
                     "Spend your crypto anywhere with global card acceptance.",
@@ -691,21 +540,21 @@ const COZTokenLandingPage: React.FC = () => {
                   amount: "£3,126",
                   currency: "Main",
                   description: "Salary",
-                  additionalInfo: "11:42",
+
                   delay: 0,
                 },
                 {
                   amount: "2,540",
                   currency: "Causecoin",
                   description: "Cause Coin Stays",
-                  additionalInfo: "+740 points",
+
                   delay: 0.1,
                 },
                 {
                   amount: "£4,500",
                   currency: "Joint account",
                   description: "Weekend getaway",
-                  additionalInfo: "For our weekend trip",
+
                   delay: 0.2,
                 },
               ].map((card, index) => (
@@ -732,11 +581,7 @@ const COZTokenLandingPage: React.FC = () => {
 
             <div className="text-center mt-12">
               <p className="text-sm text-white mb-4">T&Cs apply.</p>
-              <Button
-                text="Get started"
-                link="#downloadWallet"
-                action="scroll"
-              />
+              <Button text="Get started" link="#downloadWallet" />
             </div>
           </div>
         </motion.section>
@@ -813,16 +658,8 @@ const COZTokenLandingPage: React.FC = () => {
 
                 {/* QR Codes - Only visible on desktop */}
                 <div className="hidden md:flex gap-8 mt-8">
-                  <QRCode
-                    platform="iOS"
-                    qrImage="url_to_ios_qr_code.png"
-                    link="app_store_link"
-                  />
-                  <QRCode
-                    platform="Android"
-                    qrImage="url_to_android_qr_code.png"
-                    link="play_store_link"
-                  />
+                  <QRCode platform="iOS" link="app_store_link" />
+                  <QRCode platform="Android" link="play_store_link" />
                 </div>
               </motion.div>
 
@@ -847,35 +684,6 @@ const COZTokenLandingPage: React.FC = () => {
           </div>
         </motion.section>
       </Element>
-
-      {/* Team Section */}
-      {/* <Element name="team">
-        <motion.section
-          className="h-screen w-full flex items-center justify-center bg-gray-100"
-          ref={teamRef}
-          initial="hidden"
-          animate={teamInView ? "visible" : "hidden"}
-          variants={slideInRight}
-        >
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-4xl font-bold mb-4">Meet the Team</h2>
-            <p className="text-xl mb-8">Get to know the passionate individuals behind Cause Token.</p>
-            <ScrollLink
-              to="teamPage"
-              smooth={true}
-              duration={800}
-              spy={true}
-              offset={0}
-              className="inline-block px-6 py-3 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              tabIndex={0}
-              role="button"
-              aria-label="View Team"
-            >
-              View Team
-            </ScrollLink>
-          </div>
-        </motion.section>
-      </Element> */}
 
       {/* Footer with gold theme */}
       <footer className="bg-gradient-to-b from-[#B8860B]/10 to-[#8B4513]/20 text-[#8B4513] py-12">
