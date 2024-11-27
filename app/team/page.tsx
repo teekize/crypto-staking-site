@@ -39,7 +39,7 @@ const teamMembers = [
 
 const TeamPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFD700]/5 via-[#DAA520]/10 to-[#B8860B]/15 py-24">
+    <div className="min-h-screen bg-gradient-to-br from-[#2196F3]/5 via-[#64B5F6]/10 to-[#1976D2]/15 py-24">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -47,10 +47,10 @@ const TeamPage = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-[#8B4513] mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1565C0] mb-4">
             Meet Our Team
           </h1>
-          <p className="text-lg text-[#8B4513]/70 max-w-2xl mx-auto">
+          <p className="text-lg text-[#1565C0]/70 max-w-2xl mx-auto">
             The visionaries behind Cause Coin, working together to revolutionize
             the future of finance.
           </p>
@@ -64,7 +64,7 @@ const TeamPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Card className="bg-white/80 backdrop-blur-sm border-[#FFD700]/20 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+              <Card className="bg-white/80 backdrop-blur-sm border-[#2196F3]/20 hover:shadow-lg transition-all duration-300 overflow-hidden group">
                 <CardHeader className="p-0">
                   <div className="relative w-full pt-[100%]">
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -84,17 +84,17 @@ const TeamPage = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-[#8B4513] mb-1">
+                  <h3 className="text-xl font-semibold text-[#1565C0] mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-sm text-[#8B4513]/70 mb-4">
+                  <p className="text-sm text-[#1565C0]/70 mb-4">
                     {member.role}
                   </p>
                   <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-[#0077B5] hover:text-[#0077B5]/80 transition-colors duration-300"
+                    className="inline-flex items-center space-x-2 text-[#2196F3] hover:text-[#1976D2] transition-colors duration-300"
                   >
                     <LinkedInLogoIcon className="w-5 h-5" />
                     <span className="text-sm font-medium">View Profile</span>

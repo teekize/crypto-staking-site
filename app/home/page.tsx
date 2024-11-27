@@ -55,14 +55,23 @@ const Header: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-md border-b border-[#FFD700]/20"
+          ? "bg-white/80 backdrop-blur-md border-b border-[#2196F3]/20"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2">
+            <Image
+              src="/causeLogo.jpeg"
+              alt="Cause Logo"
+              width={40}
+              height={40}
+              className={`transition-opacity duration-300 ${
+                isScrolled ? "opacity-90" : "opacity-100"
+              }`}
+            />
             <h1 className="text-3xl md:text-4xl font-bold">
               <span
                 className={`${
@@ -100,7 +109,7 @@ const Header: React.FC = () => {
               rel="noopener noreferrer"
               className={`px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
                 isScrolled
-                  ? "bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white hover:from-[#DAA520] hover:to-[#B8860B]"
+                  ? "bg-gradient-to-r from-[#2196F3] to-[#64B5F6] text-white hover:from-[#64B5F6] hover:to-[#2196F3]"
                   : "bg-white/20 text-white hover:bg-white/30"
               }`}
             >
@@ -377,13 +386,13 @@ const COZTokenLandingPage: React.FC = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/backgroundGold.png')",
+              backgroundImage: "url('/skyBlue.png')",
               backgroundColor: "rgba(0, 0, 0, 0)",
               backgroundBlendMode: "overlay",
             }}
           />
           <div className="relative z-10 text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 px-4 italic">
               Changing the way the world transacts money
             </h1>
             <p className="text-lg md:text-xl mb-8 px-4">
@@ -391,7 +400,7 @@ const COZTokenLandingPage: React.FC = () => {
               transact money.
             </p>
             <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row justify-center px-4">
-              <Button text="Download Wallet" link="#downloadWallet" />
+              <Button text="Download the Cause Wallet" link="#downloadWallet" />
               <Button text="Learn More" link="#aboutCOZ" />
             </div>
           </div>
@@ -401,7 +410,7 @@ const COZTokenLandingPage: React.FC = () => {
       {/* About & Features Combined Section */}
       <Element name="aboutCOZ">
         <motion.section
-          className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#FFD700]/10 to-white py-16 px-4"
+          className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#2196F3]/10 to-white py-16 px-4"
           ref={aboutRef}
           initial="hidden"
           animate={aboutInView ? "visible" : "hidden"}
@@ -409,28 +418,19 @@ const COZTokenLandingPage: React.FC = () => {
         >
           <div className="max-w-7xl mx-auto">
             <motion.div className="text-center mb-12 md:mb-16">
-              <motion.h2
-                className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-[#B8860B] px-4"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-              >
-                The Currency for Humanity
+              <motion.h2 className="text-3xl md:text-4xl font-bold mb-2 text-[#2196F3]">
+                Causecoin
               </motion.h2>
-              <motion.div
-                className="max-w-3xl mx-auto space-y-4 md:space-y-6 text-base md:text-lg text-gray-700 px-4"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-              >
+              <motion.h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-[#1565C0] italic">
+                The Currency for Humanity
+              </motion.h3>
+              <motion.div className="max-w-3xl mx-auto space-y-4 md:space-y-6 text-base md:text-lg text-[#1565C0]/70 px-4">
                 <p>
                   Introducing a revolutionary financial ecosystem that
-                  transforms how we think about money. CauseCoin isn&apos;t just
+                  transforms how we think about money. Causecoin isn&apos;t just
                   another cryptocurrency – it&apos;s a movement towards
-                  compassionate capitalism, where every transaction contributes
-                  to positive global change.
+                  <span className="italic">Cause capitalism</span>, where every
+                  transaction contributes to positive global change.
                 </p>
               </motion.div>
             </motion.div>
@@ -443,21 +443,21 @@ const COZTokenLandingPage: React.FC = () => {
                   title: "Ethereum Powered",
                   desc:
                     "Secure blockchain technology for global accessibility.",
-                  color: "text-[#B8860B]",
+                  color: "text-[#2196F3]",
                 },
                 {
                   icon: RiWalletLine,
                   title: "CauseWallet",
                   desc:
                     "Your all-in-one digital wallet with instant transactions.",
-                  color: "text-[#DAA520]",
+                  color: "text-[#1976D2]",
                 },
                 {
                   icon: RiIdCardLine,
                   title: "CauseCard",
                   desc:
                     "Spend your cause anywhere with global card acceptance.",
-                  color: "text-[#CD853F]",
+                  color: "text-[#64B5F6]",
                   isCard: true,
                 },
               ].map((item, index) => (
@@ -467,7 +467,7 @@ const COZTokenLandingPage: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                 >
                   {item.isCard ? (
-                    <div className="relative h-48 bg-gradient-to-r from-[#B8860B] to-[#DAA520] rounded-xl p-6 shadow-lg overflow-hidden">
+                    <div className="relative h-48 bg-gradient-to-r from-[#2196F3] to-[#64B5F6] rounded-xl p-6 shadow-lg overflow-hidden">
                       <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-24 translate-x-24" />
                       <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full translate-y-24 -translate-x-24" />
 
@@ -503,10 +503,10 @@ const COZTokenLandingPage: React.FC = () => {
                   ) : (
                     <>
                       <item.icon className={`text-3xl mb-2 ${item.color}`} />
-                      <h3 className="font-semibold text-[#8B4513] text-base mb-1">
+                      <h3 className="font-semibold text-[#1565C0] text-base mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-[#8B4513]/70 text-sm">{item.desc}</p>
+                      <p className="text-[#1565C0]/70 text-sm">{item.desc}</p>
                     </>
                   )}
                 </motion.div>
@@ -518,7 +518,7 @@ const COZTokenLandingPage: React.FC = () => {
 
       <Element name="spending">
         <motion.section
-          className="min-h-screen w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 py-16 md:py-24"
+          className="min-h-screen w-full flex items-center justify-center bg-gradient-to-r from-[#2196F3] to-[#64B5F6] py-16 md:py-24"
           ref={spendingRef}
           initial="hidden"
           animate={spendingInView ? "visible" : "hidden"}
@@ -528,9 +528,12 @@ const COZTokenLandingPage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-8 text-center text-white">
               One World. One Card.
             </h2>
-            <p className="text-base md:text-xl mb-8 md:mb-12 text-center text-white px-4 max-w-3xl mx-auto">
-              The vision of Causecard is to be the most utilized virtual card in
-              the global marketplace.
+            <p className="text-base md:text-xl mb-4 text-center text-white px-4 max-w-3xl mx-auto">
+              Giving you the greatest freedom to spend your digital assets in a
+              compassionate way globally.
+            </p>
+            <p className="text-sm md:text-base mb-8 text-center text-white/80 px-4 max-w-3xl mx-auto">
+              You can have up to 10 cards for diverse goals.
             </p>
 
             {/* Cards Grid */}
@@ -590,7 +593,7 @@ const COZTokenLandingPage: React.FC = () => {
       {/* Wallet Download Section */}
       <Element name="downloadWallet">
         <motion.section
-          className="min-h-screen w-full py-12 md:py-16 bg-gradient-to-br from-[#FFD700]/5 via-[#DAA520]/10 to-[#B8860B]/15"
+          className="min-h-screen w-full py-12 md:py-16 bg-gradient-to-br from-[#2196F3]/5 via-[#64B5F6]/10 to-[#1976D2]/15"
           ref={downloadRef}
           initial="hidden"
           animate={downloadInView ? "visible" : "hidden"}
@@ -606,24 +609,24 @@ const COZTokenLandingPage: React.FC = () => {
                 }}
               >
                 <div className="space-y-4">
-                  <h2 className="text-4xl md:text-5xl font-bold text-[#8B4513]">
-                    Download the <span className="text-[#B8860B]">Cause</span>{" "}
+                  <h2 className="text-4xl md:text-5xl font-bold text-[#1565C0]">
+                    Download the <span className="text-[#2196F3]">Cause</span>{" "}
                     Wallet
                   </h2>
-                  <p className="text-lg md:text-xl text-[#8B4513]/80">
+                  <p className="text-lg md:text-xl text-[#1565C0]/80">
                     The Wallet in Every Pocket.
                   </p>
-                  <p className="text-base md:text-xl text-[#8B4513]/70">
+                  <p className="text-base md:text-xl text-[#1565C0]/70">
                     Get the app on your preferred platform and start managing
                     your Cause tokens today.
                   </p>
                 </div>
 
-                {/* Download buttons - Enhanced with gold theme */}
+                {/* Download buttons - Updated with sky blue theme */}
                 <div className="flex flex-col gap-4 max-w-sm mx-auto md:mx-0">
                   <a
                     href="#"
-                    className="flex items-center justify-center md:justify-start space-x-3 bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white px-6 py-4 rounded-xl hover:from-[#DAA520] hover:to-[#B8860B] transition-all duration-300 w-full shadow-lg hover:shadow-xl hover:shadow-[#FFD700]/20"
+                    className="flex items-center justify-center md:justify-start space-x-3 bg-gradient-to-r from-[#2196F3] to-[#64B5F6] text-white px-6 py-4 rounded-xl hover:from-[#64B5F6] hover:to-[#2196F3] transition-all duration-300 w-full shadow-lg hover:shadow-xl hover:shadow-[#2196F3]/20"
                   >
                     <svg
                       className="w-8 h-8 flex-shrink-0"
@@ -640,7 +643,7 @@ const COZTokenLandingPage: React.FC = () => {
 
                   <a
                     href="#"
-                    className="flex items-center justify-center md:justify-start space-x-3 bg-gradient-to-r from-[#B8860B] to-[#DAA520] text-white px-6 py-4 rounded-xl hover:from-[#DAA520] hover:to-[#B8860B] transition-all duration-300 w-full shadow-lg hover:shadow-xl hover:shadow-[#FFD700]/20"
+                    className="flex items-center justify-center md:justify-start space-x-3 bg-gradient-to-r from-[#2196F3] to-[#64B5F6] text-white px-6 py-4 rounded-xl hover:from-[#64B5F6] hover:to-[#2196F3] transition-all duration-300 w-full shadow-lg hover:shadow-xl hover:shadow-[#2196F3]/20"
                   >
                     <svg
                       className="w-8 h-8 flex-shrink-0"
@@ -663,7 +666,7 @@ const COZTokenLandingPage: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* App Image with gold tint */}
+              {/* App Image with blue tint */}
               <motion.div
                 className="relative h-[300px] md:h-[600px]"
                 variants={{
@@ -671,7 +674,7 @@ const COZTokenLandingPage: React.FC = () => {
                   visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 to-transparent rounded-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2196F3]/10 to-transparent rounded-3xl" />
                 <Image
                   src="/causeWalletDark.png"
                   alt="Cause Wallet App"
@@ -685,20 +688,20 @@ const COZTokenLandingPage: React.FC = () => {
         </motion.section>
       </Element>
 
-      {/* Footer with gold theme */}
-      <footer className="bg-gradient-to-b from-[#B8860B]/10 to-[#8B4513]/20 text-[#8B4513] py-12">
+      {/* Footer with sky blue theme */}
+      <footer className="bg-gradient-to-b from-[#2196F3]/10 to-[#1565C0]/20 text-[#1565C0] py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-between items-center">
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h3 className="text-2xl font-bold mb-4 text-[#B8860B]">
+              <h3 className="text-2xl font-bold mb-4 text-[#2196F3]">
                 Cause Coin
               </h3>
-              <p className="text-[#8B4513]/80">
+              <p className="text-[#1565C0]/80">
                 Your gateway to decentralized finance
               </p>
             </div>
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">
+              <h4 className="text-lg font-semibold mb-4 text-[#2196F3]">
                 Quick Links
               </h4>
               <ul className="space-y-2">
@@ -709,7 +712,7 @@ const COZTokenLandingPage: React.FC = () => {
                     duration={800}
                     spy={true}
                     offset={0}
-                    className="text-[#8B4513]/70 hover:text-[#B8860B] transition duration-300 ease-in-out cursor-pointer"
+                    className="text-[#1565C0]/70 hover:text-[#2196F3] transition duration-300 ease-in-out cursor-pointer"
                   >
                     About Cause
                   </ScrollLink>
@@ -721,27 +724,31 @@ const COZTokenLandingPage: React.FC = () => {
                     duration={800}
                     spy={true}
                     offset={0}
-                    className="text-[#8B4513]/70 hover:text-[#B8860B] transition duration-300 ease-in-out cursor-pointer"
+                    className="text-[#1565C0]/70 hover:text-[#2196F3] transition duration-300 ease-in-out cursor-pointer"
                   >
                     Download Wallet
                   </ScrollLink>
                 </li>
                 <li>
-                  <ScrollLink
-                    to="team"
-                    smooth={true}
-                    duration={800}
-                    spy={true}
-                    offset={0}
-                    className="text-[#8B4513]/70 hover:text-[#B8860B] transition duration-300 ease-in-out cursor-pointer"
+                  <Link
+                    href="/team"
+                    className="text-[#1565C0]/70 hover:text-[#2196F3] transition duration-300 ease-in-out cursor-pointer"
                   >
                     Team
-                  </ScrollLink>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms"
+                    className="text-[#1565C0]/70 hover:text-[#2196F3] transition duration-300 ease-in-out cursor-pointer"
+                  >
+                    Terms & Conditions
+                  </Link>
                 </li>
               </ul>
             </div>
             <div className="w-full md:w-1/3">
-              <h4 className="text-lg font-semibold mb-4 text-[#B8860B]">
+              <h4 className="text-lg font-semibold mb-4 text-[#2196F3]">
                 Follow Us
               </h4>
               <div className="flex space-x-4">
@@ -750,7 +757,7 @@ const COZTokenLandingPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-[#B8860B]/20 text-center text-[#8B4513]/60">
+          <div className="mt-8 pt-8 border-t border-[#2196F3]/20 text-center text-[#1565C0]/60">
             <p>
               &copy; {new Date().getFullYear()} Cause Coin. All rights reserved.
             </p>
