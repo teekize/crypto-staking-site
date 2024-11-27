@@ -745,6 +745,14 @@ const COZTokenLandingPage: React.FC = () => {
                     Terms & Conditions
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="text-[#1565C0]/70 hover:text-[#2196F3] transition duration-300 ease-in-out cursor-pointer"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="w-full md:w-1/3">
