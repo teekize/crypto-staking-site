@@ -386,7 +386,7 @@ const COZTokenLandingPage: React.FC = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/skyBlue.png')",
+              backgroundImage: "url('/skyblue.png')",
               backgroundColor: "rgba(0, 0, 0, 0)",
               backgroundBlendMode: "overlay",
             }}
